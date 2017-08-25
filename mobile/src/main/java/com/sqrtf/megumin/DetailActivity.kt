@@ -137,7 +137,7 @@ class DetailActivity : BaseActivity() {
                 .withLifecycle()
                 .subscribe({
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.setDataAndType(Uri.parse(it.video_files[0]?.url), "video/mp4")
+                    intent.setDataAndType(Uri.parse(Uri.encode(it.video_files[0].url, "@#&=*+-_.,:!?()/~'%")), "video/mp4")
                     startActivity(intent)
                 }, {
                     toastErrors()
@@ -329,18 +329,18 @@ class DetailActivity : BaseActivity() {
                     true
                 }
 
-                holder.view.setOnKeyListener { v, keyCode, event ->
-                    if (event.action == KeyEvent.ACTION_DOWN) {
-                        if (keyCode == KeyEvent.KEYCODE_MENU) {
-                            if (d.status != 0) openMenu(d)
-                            true
-                        } else {
-                            onKeyDown(keyCode, event)
-                        }
-                    } else {
-                        onKeyUp(keyCode, event)
-                    }
-                }
+//                holder.view.setOnKeyListener { v, keyCode, event ->
+//                    if (event.action == KeyEvent.ACTION_DOWN) {
+//                        if (keyCode == KeyEvent.KEYCODE_MENU) {
+//                            if (d.status != 0) openMenu(d)
+//                            true
+//                        } else {
+//                            onKeyDown(keyCode, event)
+//                        }
+//                    } else{
+//                        onKeyUp(keyCode, event)
+//                    }
+//                }
             }
         }
 
