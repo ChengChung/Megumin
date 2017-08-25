@@ -7,9 +7,11 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import com.sqrtf.common.MeguminApplocation
 import com.sqrtf.common.activity.BaseActivity
 import com.sqrtf.common.api.ApiClient
@@ -87,5 +89,21 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return false
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START)
+            } else {
+                drawer.openDrawer(GravityCompat.START)
+                drawer.requestFocus()
+            }
+            return true
+        }
+
+        return super.onKeyDown(keyCode, event)
     }
 }

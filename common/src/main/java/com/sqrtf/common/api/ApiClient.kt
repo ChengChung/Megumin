@@ -5,6 +5,8 @@ import android.util.Log
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.sqrtf.common.SSLCompat.SSLSocketFactoryCompat
+import com.sqrtf.common.SSLCompat.SSLVals
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Converter
@@ -13,6 +15,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.IllegalStateException
 
+import javax.net.ssl.*
+import java.security.cert.*
 
 /**
  * Created by roya on 2017/5/22.
@@ -61,6 +65,8 @@ object ApiClient {
     private fun create(context: Context, server: String): ApiService {
         cookieJar = PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(context))
 
+        val sslSocketFactory = SSLSocketFactoryCompat(SSLVals.trustAllCerts[0] as X509TrustManager)
+
         val okHttp = OkHttpClient.Builder()
                 .cookieJar(cookieJar)
                 .addInterceptor {
@@ -74,6 +80,8 @@ object ApiClient {
                             .body(ResponseBody.create(body.contentType(), bodyString))
                             .build()
                 }
+                .sslSocketFactory(sslSocketFactory, SSLVals.trustAllCerts[0] as X509TrustManager)
+                .hostnameVerifier(SSLVals.hostnameVerifier)
                 .build()
 
         retrofit = Retrofit.Builder()
