@@ -6,14 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.sqrtf.common.StringUtil
@@ -165,7 +164,15 @@ class DetailActivity : BaseActivity() {
             dialog.dismiss()
         }
 
+
         dialog.setContentView(view)
+
+        val behavior = BottomSheetBehavior.from(view.parent as View)
+        dialog.setOnShowListener {
+            behavior.peekHeight = view.height
+//            view.findViewById(R.id.button_mark_watched).requestFocus()
+        }
+
         dialog.show()
     }
 
@@ -322,6 +329,18 @@ class DetailActivity : BaseActivity() {
                     true
                 }
 
+                holder.view.setOnKeyListener { v, keyCode, event ->
+                    if (event.action == KeyEvent.ACTION_DOWN) {
+                        if (keyCode == KeyEvent.KEYCODE_MENU) {
+                            if (d.status != 0) openMenu(d)
+                            true
+                        } else {
+                            onKeyDown(keyCode, event)
+                        }
+                    } else {
+                        onKeyUp(keyCode, event)
+                    }
+                }
             }
         }
 

@@ -166,13 +166,13 @@ class PlayerActivity : BaseActivity() {
             }
             return true
         } else {
-            if (keyCode==KeyEvent.KEYCODE_DPAD_CENTER
-                    || keyCode==KeyEvent.KEYCODE_DPAD_UP
-                    || keyCode==KeyEvent.KEYCODE_DPAD_DOWN
-                    || keyCode==KeyEvent.KEYCODE_DPAD_LEFT
-                    || keyCode==KeyEvent.KEYCODE_DPAD_RIGHT) {
+            if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER
+                    || keyCode == KeyEvent.KEYCODE_DPAD_UP
+                    || keyCode == KeyEvent.KEYCODE_DPAD_DOWN
+                    || keyCode == KeyEvent.KEYCODE_DPAD_LEFT
+                    || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
                 playerView.showController()
-            } else if (keyCode==KeyEvent.KEYCODE_BACK) {
+            } else if (keyCode == KeyEvent.KEYCODE_BACK) {
                 playerView.dismissController()
                 return true
             }
